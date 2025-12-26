@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout - ModernShop</title>
+    <title>Checkout - SastaShop</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -13,20 +13,19 @@
         <div class="container">
             <div class="nav-wrapper">
                 <div class="logo">
-                    <a href="index.html"><i class="fas fa-shopping-bag"></i> ModernShop</a>
+                    <a href="index.html"><i class="fas fa-shopping-bag"></i> SastaShop</a>
                 </div>
                 
                 <nav class="nav-menu" id="navMenu">
                     <ul>
                         <li><a href="index.html">Home</a></li>
                         <li><a href="shop.html">Shop</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </nav>
 
                 <div class="nav-icons">
-                    <a href="#" class="search-icon"><i class="fas fa-search"></i></a>
                     <a href="cart.html" class="cart-icon">
                         <i class="fas fa-shopping-cart"></i>
                         <span class="cart-count" id="cartCount">0</span>
@@ -98,6 +97,7 @@
                                     <label>Country *</label>
                                     <select name="country" required>
                                         <option value="">Select Country</option>
+                                        <option value="PK">Pakistan</option>
                                         <option value="US">United States</option>
                                         <option value="CA">Canada</option>
                                         <option value="UK">United Kingdom</option>
@@ -118,6 +118,10 @@
                                 <label class="payment-option">
                                     <input type="radio" name="payment" value="paypal">
                                     <span><i class="fab fa-paypal"></i> PayPal</span>
+                                </label>
+                                <label class="payment-option">
+                                    <input type="radio" name="payment" value="cod">
+                                    <span><i class="fas fa-money-bill-wave"></i> Cash on Delivery</span>
                                 </label>
                             </div>
                             
@@ -198,21 +202,20 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <h3>ModernShop</h3>
+                    <h3>SastaShop</h3>
                     <p>Your one-stop destination for fashion and style. Quality products, affordable prices.</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-pinterest"></i></a>
                     </div>
                 </div>
                 <div class="footer-col">
                     <h4>Quick Links</h4>
                     <ul>
                         <li><a href="shop.html">Shop</a></li>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
                         <li><a href="#faq">FAQ</a></li>
                     </ul>
                 </div>
@@ -228,14 +231,14 @@
                 <div class="footer-col">
                     <h4>Contact Us</h4>
                     <ul>
-                        <li><i class="fas fa-map-marker-alt"></i> 123 Fashion St, NY 10001</li>
-                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
-                        <li><i class="fas fa-envelope"></i> info@modernshop.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Fashion St, Peshawar</li>
+                        <li><i class="fas fa-phone"></i> 0333 0000000</li>
+                        <li><i class="fas fa-envelope"></i> info@sastashop.com</li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 ModernShop. All rights reserved.</p>
+                <p>&copy; 2025 SastaShop. All rights reserved.</p>
             </div>
         </div>
     </footer>
