@@ -138,7 +138,7 @@ const products = [
         price: 29.99,
         originalPrice: 39.99,
         rating: 4.5,
-        image: "product1.jpg",
+        image: "images/Classic Cotton T-Shirt.jpg",
         description: "Comfortable and stylish cotton t-shirt perfect for everyday wear. Made from 100% premium cotton.",
         sizes: ["S", "M", "L", "XL"],
         colors: ["#000000", "#ffffff", "#1e40af"],
@@ -151,7 +151,7 @@ const products = [
         price: 79.99,
         originalPrice: 99.99,
         rating: 4.8,
-        image: "product2.jpg",
+        image: "images/Slim_Fit_Jeans.png",
         description: "Modern slim fit jeans with stretch denim for ultimate comfort. Perfect for casual or smart-casual occasions.",
         sizes: ["28", "30", "32", "34", "36"],
         colors: ["#1e3a8a", "#000000"],
@@ -164,7 +164,7 @@ const products = [
         price: 59.99,
         originalPrice: 79.99,
         rating: 4.6,
-        image: "product3.jpg",
+        image: "images/Summer Dress.png",
         description: "Beautiful floral summer dress with a flattering fit. Perfect for warm weather and special occasions.",
         sizes: ["XS", "S", "M", "L"],
         colors: ["#ec4899", "#8b5cf6", "#06b6d4"],
@@ -177,7 +177,7 @@ const products = [
         price: 149.99,
         originalPrice: 199.99,
         rating: 4.9,
-        image: "product4.jpg",
+        image: "images/Leather Jacket.jpg",
         description: "Premium leather jacket with modern design. Durable and stylish for any season.",
         sizes: ["S", "M", "L", "XL"],
         colors: ["#000000", "#92400e"],
@@ -190,7 +190,7 @@ const products = [
         price: 34.99,
         originalPrice: 44.99,
         rating: 4.4,
-        image: "product5.jpg",
+        image: "images/Kids_Hoodie.png",
         description: "Cozy and warm hoodie for kids. Made with soft cotton blend for maximum comfort.",
         sizes: ["4-6Y", "6-8Y", "8-10Y", "10-12Y"],
         colors: ["#3b82f6", "#ef4444", "#10b981"],
@@ -203,7 +203,7 @@ const products = [
         price: 89.99,
         originalPrice: 119.99,
         rating: 4.7,
-        image: "product6.jpg",
+        image: "images/Running Shoes.jpg",
         description: "High-performance running shoes with excellent cushioning and support. Perfect for athletes.",
         sizes: ["7", "8", "9", "10", "11"],
         colors: ["#000000", "#ffffff", "#ef4444"],
@@ -216,7 +216,7 @@ const products = [
         price: 129.99,
         originalPrice: 179.99,
         rating: 4.8,
-        image: "product7.jpg",
+        image: "images/Designer_Handbag.png",
         description: "Elegant designer handbag with premium materials. Spacious and stylish for everyday use.",
         sizes: ["One Size"],
         colors: ["#000000", "#92400e", "#dc2626"],
@@ -229,7 +229,7 @@ const products = [
         price: 69.99,
         originalPrice: 89.99,
         rating: 4.5,
-        image: "product8.jpg",
+        image: "images/Casual Sneakers.jpg",
         description: "Comfortable casual sneakers perfect for everyday wear. Lightweight and breathable design.",
         sizes: ["7", "8", "9", "10", "11", "12"],
         colors: ["#ffffff", "#000000", "#1e40af"],
@@ -243,7 +243,10 @@ let cart = JSON.parse(localStorage.getItem('cart')) || [];
 function updateCartCount() {
     const cartCount = document.getElementById('cartCount');
     if (cartCount) {
-        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        const totalItems = cart.reduce((sum, item) => {
+            const quantity = parseInt(item.quantity) || 0;
+            return sum + quantity;
+        }, 0);
         cartCount.textContent = totalItems;
     }
 }
@@ -252,11 +255,13 @@ function addToCart(productId, size = null, color = null, quantity = 1) {
     const product = products.find(p => p.id === productId);
     if (!product) return;
 
+    const validQuantity = parseInt(quantity) || 1;
+
     const cartItem = {
         ...product,
         selectedSize: size || product.sizes[0],
         selectedColor: color || product.colors[0],
-        quantity: quantity
+        quantity: validQuantity
     };
 
     const existingItemIndex = cart.findIndex(item => 
@@ -266,7 +271,8 @@ function addToCart(productId, size = null, color = null, quantity = 1) {
     );
 
     if (existingItemIndex > -1) {
-        cart[existingItemIndex].quantity += quantity;
+        const currentQuantity = parseInt(cart[existingItemIndex].quantity) || 0;
+        cart[existingItemIndex].quantity = currentQuantity + validQuantity;
     } else {
         cart.push(cartItem);
     }
@@ -284,11 +290,14 @@ function removeFromCart(index) {
 }
 
 function updateCartItemQuantity(index, quantity) {
-    if (quantity < 1) {
+    const validQuantity = parseInt(quantity) || 0;
+    
+    if (validQuantity < 1) {
         removeFromCart(index);
         return;
     }
-    cart[index].quantity = quantity;
+    
+    cart[index].quantity = validQuantity;
     localStorage.setItem('cart', JSON.stringify(cart));
     updateCartCount();
     loadCartItems();
@@ -328,8 +337,8 @@ function renderProducts(productsToRender, containerId) {
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
         productCard.innerHTML = `
-            <div class="product-image">
-                <i class="fas fa-tshirt"></i>
+            <div class="product-image" style="background: white;">
+                <img src="${product.image}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: contain; object-position: center;">
                 ${product.badge ? `<span class="product-badge">${product.badge}</span>` : ''}
             </div>
             <div class="product-info">
@@ -392,6 +401,28 @@ function initNewsletter() {
     }
 }
 
+// ===== CONTACT FORM =====
+function initContactForm() {
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const firstName = contactForm.querySelector('#firstName').value;
+            const lastName = contactForm.querySelector('#lastName').value;
+            const email = contactForm.querySelector('#email').value;
+            const subject = contactForm.querySelector('#subject').value;
+            const message = contactForm.querySelector('#message').value;
+            
+            // Here you would typically send the form data to a server
+            // For now, we'll just show a success message
+            
+            showNotification(`Thank you ${firstName}! We've received your message and will get back to you soon.`);
+            contactForm.reset();
+        });
+    }
+}
+
 // ===== HOME PAGE INITIALIZATION =====
 function initHomePage() {
     const featuredProducts = products.slice(0, 4);
@@ -435,7 +466,6 @@ function initShopPage() {
             );
         }
 
-        // Sort
         const sortValue = sortSelect ? sortSelect.value : null;
         if (sortValue === 'price-low') {
             filteredProducts.sort((a, b) => a.price - b.price);
@@ -490,14 +520,8 @@ function initProductPage() {
 
         productDetails.innerHTML = `
             <div class="product-gallery">
-                <div class="main-image">
-                    <i class="fas fa-tshirt"></i>
-                </div>
-                <div class="thumbnail-images">
-                    <div class="thumbnail"></div>
-                    <div class="thumbnail"></div>
-                    <div class="thumbnail"></div>
-                    <div class="thumbnail"></div>
+                <div class="main-image" style="background: white;">
+                    <img src="${product.image}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: contain; border-radius: 12px;">
                 </div>
             </div>
             <div class="product-details-info">
@@ -651,23 +675,25 @@ function loadCartItems() {
     let subtotal = 0;
 
     cart.forEach((item, index) => {
-        const itemTotal = item.price * item.quantity;
+        const itemQuantity = parseInt(item.quantity) || 1;
+        const itemPrice = parseFloat(item.price) || 0;
+        const itemTotal = itemPrice * itemQuantity;
         subtotal += itemTotal;
 
         const cartItem = document.createElement('div');
         cartItem.className = 'cart-item';
         cartItem.innerHTML = `
-            <div class="cart-item-image">
-                <i class="fas fa-tshirt"></i>
+            <div class="cart-item-image" style="background: white;">
+                <img src="${item.image}" alt="${item.name}" style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;">
             </div>
             <div class="cart-item-details">
                 <h3>${item.name}</h3>
                 <p>Size: ${item.selectedSize}</p>
                 <p>Color: <span style="display: inline-block; width: 20px; height: 20px; background-color: ${item.selectedColor}; border-radius: 50%; vertical-align: middle;"></span></p>
                 <div class="quantity-controls" style="margin-top: 1rem;">
-                    <button onclick="updateCartItemQuantity(${index}, ${item.quantity - 1})">-</button>
-                    <input type="number" value="${item.quantity}" readonly>
-                    <button onclick="updateCartItemQuantity(${index}, ${item.quantity + 1})">+</button>
+                    <button onclick="updateCartItemQuantity(${index}, ${itemQuantity - 1})">-</button>
+                    <input type="number" value="${itemQuantity}" readonly>
+                    <button onclick="updateCartItemQuantity(${index}, ${itemQuantity + 1})">+</button>
                 </div>
             </div>
             <div class="cart-item-actions">
@@ -722,20 +748,29 @@ function initCheckoutPage() {
         summaryItems.innerHTML = '';
         
         cart.forEach(item => {
+            const itemQuantity = parseInt(item.quantity) || 1;
+            const itemPrice = parseFloat(item.price) || 0;
+            const itemTotal = itemPrice * itemQuantity;
+            
             const summaryItem = document.createElement('div');
             summaryItem.className = 'summary-item';
             summaryItem.innerHTML = `
                 <div class="item-info">
                     <h4>${item.name}</h4>
-                    <p>Qty: ${item.quantity} | Size: ${item.selectedSize}</p>
+                    <p>Qty: ${itemQuantity} | Size: ${item.selectedSize}</p>
                 </div>
-                <div class="item-price">$${(item.price * item.quantity).toFixed(2)}</div>
+                <div class="item-price">$${itemTotal.toFixed(2)}</div>
             `;
             summaryItems.appendChild(summaryItem);
         });
     }
 
-    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const subtotal = cart.reduce((sum, item) => {
+        const itemQuantity = parseInt(item.quantity) || 1;
+        const itemPrice = parseFloat(item.price) || 0;
+        return sum + (itemPrice * itemQuantity);
+    }, 0);
+    
     const shipping = subtotal > 50 ? 0 : 10;
     const tax = subtotal * 0.1;
     const total = subtotal + shipping + tax;
@@ -773,47 +808,12 @@ function initCheckoutPage() {
     });
 }
 
-// ===== AUTH PAGES =====
-function initLoginPage() {
-    const loginForm = document.getElementById('loginForm');
-    if (loginForm) {
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            showNotification('Login successful!');
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 1500);
-        });
-    }
-}
-
-function initSignupPage() {
-    const signupForm = document.getElementById('signupForm');
-    if (signupForm) {
-        signupForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const password = signupForm.querySelector('input[name="password"]').value;
-            const confirmPassword = signupForm.querySelector('input[name="confirmPassword"]').value;
-            
-            if (password !== confirmPassword) {
-                alert('Passwords do not match!');
-                return;
-            }
-            
-            showNotification('Account created successfully!');
-            setTimeout(() => {
-                window.location.href = 'login.html';
-            }, 1500);
-        });
-    }
-}
-
 // ===== INITIALIZE ON PAGE LOAD =====
 document.addEventListener('DOMContentLoaded', () => {
     updateCartCount();
     initMobileMenu();
     initNewsletter();
+    initContactForm();
 
     const path = window.location.pathname;
     
@@ -827,10 +827,6 @@ document.addEventListener('DOMContentLoaded', () => {
         initCartPage();
     } else if (path.includes('checkout.html')) {
         initCheckoutPage();
-    } else if (path.includes('login.html')) {
-        initLoginPage();
-    } else if (path.includes('signup.html')) {
-        initSignupPage();
     }
 });
 
