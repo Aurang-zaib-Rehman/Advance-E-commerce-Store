@@ -1,10 +1,13 @@
+// ===== THEME TOGGLE FUNCTIONALITY =====
 function initThemeToggle() {
     const themeToggleBtn = document.getElementById('themeToggle');
     const htmlElement = document.documentElement;
-
+    
+    // Check for saved theme preference or default to 'light'
     const currentTheme = localStorage.getItem('theme') || 'light';
     htmlElement.setAttribute('data-theme', currentTheme);
     
+    // Update icon based on current theme
     updateThemeIcon(currentTheme);
     
     if (themeToggleBtn) {
@@ -31,7 +34,7 @@ function updateThemeIcon(theme) {
     }
 }
 
-// SLIDER
+// ===== HERO SLIDER =====
 function initHeroSlider() {
     const slides = document.querySelectorAll('.slide');
     const dots = document.querySelectorAll('.dot');
@@ -117,7 +120,7 @@ function initHeroSlider() {
     });
 }
 
-// COUNTER
+// ===== STATISTICS COUNTER ANIMATION =====
 function initCounterAnimation() {
     const counters = document.querySelectorAll('.stat-number');
     
@@ -162,7 +165,7 @@ function initCounterAnimation() {
     counters.forEach(counter => observer.observe(counter));
 }
 
-// PRODUCTS DATA
+// ===== SAMPLE PRODUCTS DATA =====
 const products = [
     {
         id: 1,
@@ -270,22 +273,22 @@ const products = [
     }
 ];
 
-// CART MANAGEMENT
+// ===== CART MANAGEMENT =====
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-
+// Initialize cart with default items if empty
 function initializeDefaultCart() {
     if (cart.length === 0) {
-        
+        // Add 2 default products to the cart
         const defaultCartItems = [
             {
-                ...products[0],
+                ...products[0], // Classic Cotton T-Shirt
                 selectedSize: "M",
                 selectedColor: "#000000",
                 quantity: 1
             },
             {
-                ...products[2], 
+                ...products[2], // Summer Dress
                 selectedSize: "S",
                 selectedColor: "#ec4899",
                 quantity: 2
@@ -298,6 +301,7 @@ function initializeDefaultCart() {
     }
 }
 
+// Call this function on page load
 initializeDefaultCart();
 
 function updateCartCount() {
@@ -386,7 +390,7 @@ function showNotification(message) {
     }, 3000);
 }
 
-// PRODUCTS
+// ===== RENDER PRODUCTS =====
 function renderProducts(productsToRender, containerId) {
     const container = document.getElementById(containerId);
     if (!container) return;
@@ -437,7 +441,7 @@ function addToWishlist(productId) {
     showNotification('Added to wishlist!');
 }
 
-// TOGGLE
+// ===== MOBILE MENU TOGGLE =====
 function initMobileMenu() {
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const navMenu = document.getElementById('navMenu');
@@ -449,6 +453,7 @@ function initMobileMenu() {
     }
 }
 
+// ===== NEWSLETTER SUBSCRIPTION =====
 function initNewsletter() {
     const newsletterForm = document.getElementById('newsletterForm');
     if (newsletterForm) {
@@ -460,7 +465,7 @@ function initNewsletter() {
     }
 }
 
-// CONTACT
+// ===== CONTACT FORM =====
 function initContactForm() {
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
@@ -473,12 +478,16 @@ function initContactForm() {
             const subject = contactForm.querySelector('#subject').value;
             const message = contactForm.querySelector('#message').value;
             
+            // Here you would typically send the form data to a server
+            // For now, we'll just show a success message
+            
             showNotification(`Thank you ${firstName}! We've received your message and will get back to you soon.`);
             contactForm.reset();
         });
     }
 }
 
+// ===== HOME PAGE INITIALIZATION =====
 function initHomePage() {
     const featuredProducts = products.slice(0, 4);
     renderProducts(featuredProducts, 'featuredProducts');
@@ -486,6 +495,7 @@ function initHomePage() {
     initCounterAnimation();
 }
 
+// ===== SHOP PAGE INITIALIZATION =====
 function initShopPage() {
     let filteredProducts = [...products];
 
@@ -550,7 +560,7 @@ function initShopPage() {
     }
 }
 
-// PRODUCT DETAILS
+// ===== PRODUCT DETAILS PAGE =====
 function initProductPage() {
     const urlParams = new URLSearchParams(window.location.search);
     const productId = parseInt(urlParams.get('id'));
@@ -700,7 +710,7 @@ function initProductPage() {
     renderProducts(relatedProducts, 'relatedProducts');
 }
 
-// CART
+// ===== CART PAGE =====
 function loadCartItems() {
     const cartItemsContainer = document.getElementById('cartItems');
     const emptyCart = document.getElementById('emptyCart');
@@ -790,7 +800,7 @@ function initCartPage() {
     }
 }
 
-// CHECKOUT
+// ===== CHECKOUT PAGE =====
 function initCheckoutPage() {
     if (cart.length === 0) {
         window.location.href = 'cart.html';
@@ -862,9 +872,9 @@ function initCheckoutPage() {
     });
 }
 
-// INITIALIZATION ON PAGE LOAD 
+// ===== INITIALIZE ON PAGE LOAD =====
 document.addEventListener('DOMContentLoaded', () => {
-    initThemeToggle(); 
+    initThemeToggle(); // Initialize theme toggle first
     updateCartCount();
     initMobileMenu();
     initNewsletter();
@@ -872,20 +882,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const path = window.location.pathname;
     
-    if (path.includes('index.html') || path.endsWith('/')) {
+    // Check for index page (works with or without .html)
+    if (path.includes('index.html') || path.endsWith('/') || path === '') {
         initHomePage();
-    } else if (path.includes('shop.html')) {
+    } 
+    // Check for shop page (works with or without .html)
+    else if (path.includes('shop.html') || path.includes('/shop')) {
         initShopPage();
-    } else if (path.includes('product.html')) {
+    } 
+    // Check for product page (works with or without .html)
+    else if (path.includes('product.html') || path.includes('/product')) {
         initProductPage();
-    } else if (path.includes('cart.html')) {
+    } 
+    // Check for cart page (works with or without .html)
+    else if (path.includes('cart.html') || path.includes('/cart')) {
         initCartPage();
-    } else if (path.includes('checkout.html')) {
+    } 
+    // Check for checkout page (works with or without .html)
+    else if (path.includes('checkout.html') || path.includes('/checkout')) {
         initCheckoutPage();
     }
 });
 
-// animations
+// Add CSS animations
 const style = document.createElement('style');
 style.textContent = `
     @keyframes slideIn {
