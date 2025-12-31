@@ -1,4 +1,37 @@
-// ===== HERO SLIDER =====
+function initThemeToggle() {
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const htmlElement = document.documentElement;
+
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    htmlElement.setAttribute('data-theme', currentTheme);
+    
+    updateThemeIcon(currentTheme);
+    
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+    }
+}
+
+function updateThemeIcon(theme) {
+    const themeToggleBtn = document.getElementById('themeToggle');
+    if (themeToggleBtn) {
+        const icon = themeToggleBtn.querySelector('i');
+        if (theme === 'dark') {
+            icon.className = 'fas fa-sun';
+        } else {
+            icon.className = 'fas fa-moon';
+        }
+    }
+}
+
+// SLIDER
 function initHeroSlider() {
     const slides = document.querySelectorAll('.slide');
     const dots = document.querySelectorAll('.dot');
@@ -84,7 +117,7 @@ function initHeroSlider() {
     });
 }
 
-// ===== STATISTICS COUNTER ANIMATION =====
+// COUNTER
 function initCounterAnimation() {
     const counters = document.querySelectorAll('.stat-number');
     
@@ -129,7 +162,7 @@ function initCounterAnimation() {
     counters.forEach(counter => observer.observe(counter));
 }
 
-// ===== SAMPLE PRODUCTS DATA =====
+// PRODUCTS DATA
 const products = [
     {
         id: 1,
@@ -237,8 +270,35 @@ const products = [
     }
 ];
 
-// ===== CART MANAGEMENT =====
+// CART MANAGEMENT
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+
+function initializeDefaultCart() {
+    if (cart.length === 0) {
+        
+        const defaultCartItems = [
+            {
+                ...products[0],
+                selectedSize: "M",
+                selectedColor: "#000000",
+                quantity: 1
+            },
+            {
+                ...products[2], 
+                selectedSize: "S",
+                selectedColor: "#ec4899",
+                quantity: 2
+            }
+        ];
+        
+        cart = defaultCartItems;
+        localStorage.setItem('cart', JSON.stringify(cart));
+        console.log('Default cart items added:', cart);
+    }
+}
+
+initializeDefaultCart();
 
 function updateCartCount() {
     const cartCount = document.getElementById('cartCount');
@@ -326,7 +386,7 @@ function showNotification(message) {
     }, 3000);
 }
 
-// ===== RENDER PRODUCTS =====
+// PRODUCTS
 function renderProducts(productsToRender, containerId) {
     const container = document.getElementById(containerId);
     if (!container) return;
@@ -377,7 +437,7 @@ function addToWishlist(productId) {
     showNotification('Added to wishlist!');
 }
 
-// ===== MOBILE MENU TOGGLE =====
+// TOGGLE
 function initMobileMenu() {
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const navMenu = document.getElementById('navMenu');
@@ -389,7 +449,6 @@ function initMobileMenu() {
     }
 }
 
-// ===== NEWSLETTER SUBSCRIPTION =====
 function initNewsletter() {
     const newsletterForm = document.getElementById('newsletterForm');
     if (newsletterForm) {
@@ -401,7 +460,7 @@ function initNewsletter() {
     }
 }
 
-// ===== CONTACT FORM =====
+// CONTACT
 function initContactForm() {
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
@@ -414,16 +473,12 @@ function initContactForm() {
             const subject = contactForm.querySelector('#subject').value;
             const message = contactForm.querySelector('#message').value;
             
-            // Here you would typically send the form data to a server
-            // For now, we'll just show a success message
-            
             showNotification(`Thank you ${firstName}! We've received your message and will get back to you soon.`);
             contactForm.reset();
         });
     }
 }
 
-// ===== HOME PAGE INITIALIZATION =====
 function initHomePage() {
     const featuredProducts = products.slice(0, 4);
     renderProducts(featuredProducts, 'featuredProducts');
@@ -431,7 +486,6 @@ function initHomePage() {
     initCounterAnimation();
 }
 
-// ===== SHOP PAGE INITIALIZATION =====
 function initShopPage() {
     let filteredProducts = [...products];
 
@@ -496,7 +550,7 @@ function initShopPage() {
     }
 }
 
-// ===== PRODUCT DETAILS PAGE =====
+// PRODUCT DETAILS
 function initProductPage() {
     const urlParams = new URLSearchParams(window.location.search);
     const productId = parseInt(urlParams.get('id'));
@@ -646,7 +700,7 @@ function initProductPage() {
     renderProducts(relatedProducts, 'relatedProducts');
 }
 
-// ===== CART PAGE =====
+// CART
 function loadCartItems() {
     const cartItemsContainer = document.getElementById('cartItems');
     const emptyCart = document.getElementById('emptyCart');
@@ -736,7 +790,7 @@ function initCartPage() {
     }
 }
 
-// ===== CHECKOUT PAGE =====
+// CHECKOUT
 function initCheckoutPage() {
     if (cart.length === 0) {
         window.location.href = 'cart.html';
@@ -808,8 +862,9 @@ function initCheckoutPage() {
     });
 }
 
-// ===== INITIALIZE ON PAGE LOAD =====
+// INITIALIZATION ON PAGE LOAD 
 document.addEventListener('DOMContentLoaded', () => {
+    initThemeToggle(); 
     updateCartCount();
     initMobileMenu();
     initNewsletter();
@@ -830,7 +885,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Add CSS animations
+// animations
 const style = document.createElement('style');
 style.textContent = `
     @keyframes slideIn {

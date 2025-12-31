@@ -26,6 +26,9 @@
                 </nav>
 
                 <div class="nav-icons">
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
                     <a href="cart.html" class="cart-icon">
                         <i class="fas fa-shopping-cart"></i>
                         <span class="cart-count" id="cartCount">0</span>
@@ -41,7 +44,6 @@
     <!-- Hero Section with Slider -->
     <section class="hero-slider">
         <div class="slider-container">
-            <!-- Slide 1: Summer Collection -->
             <div class="slide active" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('./images/summer.jpg') top/cover;">
                 <div class="slide-overlay">
                     <div class="slide-content-center">
@@ -52,7 +54,6 @@
                 </div>
             </div>
             
-            <!-- Slide 2: Winter Sale -->
             <div class="slide" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('./images/winter.jpg') top/cover;">
                 <div class="slide-overlay">
                     <div class="slide-content-center">
@@ -63,7 +64,6 @@
                 </div>
             </div>
             
-            <!-- Slide 3: Spring Styles -->
             <div class="slide" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('./images/spring.jpg') top/cover;">
                 <div class="slide-overlay">
                     <div class="slide-content-center">
@@ -81,7 +81,6 @@
             <button class="slider-btn next" id="nextSlide"><i class="fas fa-chevron-right"></i></button>
         </div>
         
-        <!-- Slider Dots -->
         <div class="slider-dots">
             <span class="dot active" data-slide="0"></span>
             <span class="dot" data-slide="1"></span>
@@ -113,7 +112,6 @@
                     <div class="brand-item">
                         <img src="./images/puma.png" alt="Puma" class="brand-logo-img">
                     </div>
-                    <!-- Duplicate for seamless loop -->
                     <div class="brand-item">
                         <img src="./images/nike.png" alt="Nike" class="brand-logo-img">
                     </div>
@@ -174,7 +172,7 @@
         </div>
     </section>
 
-    <!-- Statistics Counter Section -->
+    <!-- Counter Section -->
     <section class="statistics-section">
         <div class="container">
             <div class="stats-grid">
@@ -223,7 +221,7 @@
         <div class="container">
             <h2 class="section-title">Featured Products</h2>
             <div class="products-grid" id="featuredProducts">
-                <!-- Products will be dynamically loaded here -->
+                
             </div>
         </div>
     </section>

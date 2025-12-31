@@ -8,14 +8,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <div class="container">
             <div class="nav-wrapper">
                 <div class="logo">
                     <a href="index.html"><i class="fas fa-shopping-bag"></i> SastaShop</a>
                 </div>
-                
                 <nav class="nav-menu" id="navMenu">
                     <ul>
                         <li><a href="index.html">Home</a></li>
@@ -24,8 +22,10 @@
                         <li><a href="contact.html" class="active">Contact</a></li>
                     </ul>
                 </nav>
-
                 <div class="nav-icons">
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
                     <a href="cart.html" class="cart-icon">
                         <i class="fas fa-shopping-cart"></i>
                         <span class="cart-count" id="cartCount">0</span>
@@ -38,7 +38,6 @@
         </div>
     </header>
 
-    <!-- Page Header -->
     <section class="page-header">
         <div class="container">
             <h1>Contact Us</h1>
@@ -46,7 +45,6 @@
         </div>
     </section>
 
-    <!-- Contact Content -->
     <section class="contact-section">
         <div class="container">
             <div class="contact-intro">
@@ -55,7 +53,6 @@
             </div>
 
             <div class="contact-wrapper">
-                <!-- Contact Form -->
                 <div class="contact-form-container">
                     <h3><i class="fas fa-envelope"></i> Send Us a Message</h3>
                     <form class="contact-form" id="contactForm">
@@ -73,21 +70,18 @@
                                 <input type="text" id="lastName" name="lastName" required>
                             </div>
                         </div>
-
                         <div class="form-group">
                             <label for="email">
                                 <i class="fas fa-envelope"></i> Email Address
                             </label>
                             <input type="email" id="email" name="email" required>
                         </div>
-
                         <div class="form-group">
                             <label for="phone">
                                 <i class="fas fa-phone"></i> Phone Number (Optional)
                             </label>
                             <input type="tel" id="phone" name="phone">
                         </div>
-
                         <div class="form-group">
                             <label for="subject">
                                 <i class="fas fa-tag"></i> Subject
@@ -102,21 +96,18 @@
                                 <option value="other">Other</option>
                             </select>
                         </div>
-
                         <div class="form-group">
                             <label for="message">
                                 <i class="fas fa-comment"></i> Message
                             </label>
                             <textarea id="message" name="message" rows="6" required placeholder="Tell us how we can help you..."></textarea>
                         </div>
-
                         <button type="submit" class="btn btn-primary btn-full">
                             <i class="fas fa-paper-plane"></i> Send Message
                         </button>
                     </form>
                 </div>
 
-                <!-- Contact Information -->
                 <div class="contact-info-container">
                     <h3><i class="fas fa-info-circle"></i> Contact Information</h3>
                     
@@ -172,7 +163,6 @@
                 </div>
             </div>
 
-            <!-- FAQ Section -->
             <div class="contact-faq">
                 <h2>Frequently Asked Questions</h2>
                 <div class="faq-grid">
@@ -197,7 +187,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
